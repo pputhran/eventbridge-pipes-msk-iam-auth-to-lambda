@@ -62,10 +62,12 @@ Resources:
       Properties:
         TemplateURL: "./pipes.yaml"
         Parameters:
-          MSKCluster: !GetAtt MSKCluster.Outputs.MSKCluster
           PrivateSubnetMSKOne: !GetAtt MSKVPCStack.Outputs.PrivateSubnetMSKOne
           PrivateSubnetMSKTwo: !GetAtt MSKVPCStack.Outputs.PrivateSubnetMSKTwo
           MSKTopic: !Ref MSKTopic
+          MSKCluster: !GetAtt MSKCluster.Outputs.MSKCluster
+          ClusterName: !GetAtt MSKCluster.Outputs.ClusterName
+          ClusterId: !GetAtt MSKCluster.Outputs.ClusterId
 
 
 

@@ -15,6 +15,10 @@ Parameters:
   PrivateSubnetMSKTwo:
     Type: String
     Description: 'Private Subnet Two'
+  ClusterName:
+    Type: String
+  ClusterId:
+    Type: String
 
 Resources:
   # Role + Permissions for Pipes
@@ -40,13 +44,19 @@ Resources:
                   - kafka:DescribeCluster
                   - kafka:DescribeClusterV2
                   - kafka:GetBootstrapBrokers
+                Resource: !Ref MSKCluster
+              - Effect: Allow
+                Action:
                   - kafka-cluster:Connect
                   - kafka-cluster:DescribeGroup
                   - kafka-cluster:AlterGroup
                   - kafka-cluster:DescribeTopic
                   - kafka-cluster:ReadData
                   - kafka-cluster:DescribeClusterDynamicConfiguration
-                Resource: !Ref MSKCluster
+                Resource:
+                  - !Ref MSKCluster
+                  - !Sub 'arn:aws:kafka:${AWS::Region}:${AWS::AccountId}:group/${ClusterName}/${ClusterId}/*'
+                  - !Sub 'arn:aws:kafka:${AWS::Region}:${AWS::AccountId}:topic/${ClusterName}/${ClusterId}/${MSKTopic}'
               - Effect: Allow
                 Action:
                   - ec2:DescribeNetworkInterfaces
