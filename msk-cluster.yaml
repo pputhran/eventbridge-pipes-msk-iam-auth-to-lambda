@@ -71,6 +71,11 @@ Resources:
         ToPort: 9092
         IpProtocol: tcp
         SourceSecurityGroupId: !GetAtt KafkaClientInstanceSecurityGroup.GroupId
+      - Description: IAM Auth access control
+        FromPort: 9098
+        ToPort: 9098
+        IpProtocol: tcp
+        SourceSecurityGroupId: !GetAtt KafkaClientInstanceSecurityGroup.GroupId
       - Description: Bootstrap servers TLS
         FromPort: 9094
         ToPort: 9094
